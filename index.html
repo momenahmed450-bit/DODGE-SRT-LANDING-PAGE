@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dodge Challenger SRT Hellcat — Unleash The Beast</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@300;400;500;600;700&family=Barlow:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --bg-pitch: #0D0D0D;
+      --bg-charcoal: #1A1A1A;
+      --accent-flame: #E50914;
+      --accent-crimson: #FF1E27;
+      --text-white: #FFFFFF;
+      --text-slate: #A1A1AA;
+    }
+
+    * { -webkit-font-smoothing: antialiased; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg-pitch);
+      color: var(--text-white);
+      font-family: 'Barlow', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .font-display { font-family: 'Anton', sans-serif; letter-spacing: 0.01em; }
+    .font-racing { font-family: 'Oswald', sans-serif; }
+    .italic-accent { font-family: 'Oswald', sans-serif; font-style: italic; font-weight: 700; }
+
+    .hero-image {
+      background-image: url('https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=1920&q=85');
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.7) contrast(1.1) saturate(1.1);
+    }
+
+    .red-glow { box-shadow: 0 0 60px rgba(229, 9, 20, 0.5); }
+    .text-glow { text-shadow: 0 0 40px rgba(229, 9, 20, 0.7), 0 0 80px rgba(229, 9, 20, 0.3); }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 30px rgba(229, 9, 20, 0.5), 0 0 60px rgba(229, 9, 20, 0.2); }
+      50% { box-shadow: 0 0 50px rgba(229, 9, 20, 0.8), 0 0 100px rgba(229, 9, 20, 0.4); }
+    }
+    @keyframes waveform {
+      0%, 100% { transform: scaleY(0.2); }
+      50% { transform: scaleY(1); }
+    }
+    @keyframes scroll-bounce {
+      0%, 100% { transform: translateY(0); opacity: 1; }
+      50% { transform: translateY(10px); opacity: 0.4; }
+    }
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    @keyframes ring-pulse {
+      0% { transform: scale(1); opacity: 0.8; }
+      100% { transform: scale(2.2); opacity: 0; }
+    }
+
+    .float-anim { animation: float 4s ease-in-out infinite; }
+    .pulse-glow-anim { animation: pulse-glow 2.5s ease-in-out infinite; }
+    .scroll-bounce { animation: scroll-bounce 2s ease-in-out infinite; }
+    .marquee-anim { animation: marquee 25s linear infinite; }
+
+    .wave-bar {
+      width: 100%;
+      transform-origin: bottom;
+      animation: waveform 0.8s ease-in-out infinite;
+      animation-play-state: paused;
+      background: linear-gradient(to top, #E50914, #FF1E27);
+      border-radius: 2px 2px 0 0;
+    }
+    .wave-bar.playing { animation-play-state: running; }
+
+    .feature-card {
+      position: relative;
+      background: linear-gradient(145deg, #1A1A1A 0%, #0D0D0D 100%);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+    }
+    .feature-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, transparent 0%, rgba(229, 9, 20, 0.08) 100%);
+      opacity: 0; transition: opacity 0.4s;
+    }
+    .feature-card::after {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 2px;
+      background: linear-gradient(90deg, transparent, #E50914, transparent);
+      transform: translateX(-100%);
+      transition: transform 0.7s;
+    }
+    .feature-card:hover {
+      border-color: rgba(229, 9, 20, 0.5);
+      transform: translateY(-6px);
+      box-shadow: 0 25px 50px -15px rgba(229, 9, 20, 0.4);
+    }
+    .feature-card:hover::before { opacity: 1; }
+    .feature-card:hover::after { transform: translateX(100%); }
+    .feature-card:hover .feature-icon {
+      color: #FF1E27;
+      transform: scale(1.15) rotate(-6deg);
+      text-shadow: 0 0 25px rgba(255, 30, 39, 0.6);
+    }
+    .feature-icon { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #E50914 0%, #FF1E27 100%);
+      transition: all 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute; top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+      transition: left 0.6s;
+    }
+    .btn-primary:hover::before { left: 100%; }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 45px -8px rgba(229, 9, 20, 0.65);
+    }
+    .btn-outline {
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      transition: all 0.3s;
+    }
+    .btn-outline:hover {
+      border-color: #FF1E27;
+      color: #FF1E27;
+      background: rgba(255, 30, 39, 0.05);
+      box-shadow: 0 0 30px rgba(229, 9, 20, 0.2);
+    }
+
+    .spec-tab {
+      transition: all 0.3s;
+      border-bottom: 3px solid transparent;
+      cursor: pointer;
+    }
+    .spec-tab.active { border-color: #E50914; color: #FF1E27; }
+    .spec-tab:hover { color: #FF1E27; }
+
+    .gallery-item {
+      position: relative; overflow: hidden;
+      transition: all 0.5s;
+    }
+    .gallery-item img {
+      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .gallery-item:hover img { transform: scale(1.12); }
+    .gallery-item::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(13,13,13,0.95) 0%, transparent 50%);
+      opacity: 0.7; transition: opacity 0.3s;
+    }
+    .gallery-item:hover::after { opacity: 1; }
+    .gallery-item .badge {
+      transform: translateY(8px); opacity: 0.8;
+      transition: all 0.4s;
+    }
+    .gallery-item:hover .badge { transform: translateY(0); opacity: 1; }
+
+    .form-input {
+      background: rgba(13, 13, 13, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.3s;
+      font-family: 'Barlow', sans-serif;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: #E50914;
+      background: rgba(13, 13, 13, 0.9);
+      box-shadow: 0 0 0 4px rgba(229, 9, 20, 0.12);
+    }
+
+    .nav-scrolled {
+      background: rgba(13, 13, 13, 0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .speed-lines {
+      background-image: repeating-linear-gradient(
+        115deg, transparent, transparent 30px,
+        rgba(229, 9, 20, 0.03) 30px, rgba(229, 9, 20, 0.03) 31px
+      );
+    }
+
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #0D0D0D; }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #E50914, #FF1E27);
+      border-radius: 4px;
+    }
+
+    .reveal {
+      opacity: 0; transform: translateY(50px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    .hero-text-gradient {
+      background: linear-gradient(180deg, #FFFFFF 0%, #888 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .cursor-glow {
+      position: fixed;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(229, 9, 20, 0.06) 0%, transparent 70%);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      transition: opacity 0.3s;
+      mix-blend-mode: screen;
+    }
+
+    .sound-ring {
+      position: absolute; inset: 0;
+      border: 2px solid rgba(229, 9, 20, 0.4);
+      border-radius: 50%;
+      animation: ring-pulse 2s ease-out infinite;
+    }
+
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      filter: invert(1);
+      opacity: 0.5;
+      cursor: pointer;
+    }
+
+    .spec-row {
+      transition: all 0.3s;
+    }
+    .spec-row:hover {
+      background: rgba(229, 9, 20, 0.05);
+      padding-left: 8px;
+    }
+
+    @media (max-width: 768px) {
+      .cursor-glow { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="cursor-glow" id="cursorGlow"></div>
+
+  <!-- NAVIGATION -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <div class="container mx-auto px-6 py-5 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-2">
+        <span class="font-display text-2xl tracking-wider">DODGE</span>
+        <span class="text-xs font-racing italic text-[#FF1E27] border-l border-white/20 pl-2">SRT</span>
+      </a>
+      <ul class="hidden lg:flex items-center gap-8 font-racing uppercase text-sm tracking-wider font-medium">
+        <li><a href="#performance" class="hover:text-[#FF1E27] transition-colors">Performance</a></li>
+        <li><a href="#specs" class="hover:text-[#FF1E27] transition-colors">Specs</a></li>
+        <li><a href="#gallery" class="hover:text-[#FF1E27] transition-colors">Gallery</a></li>
+        <li><a href="#sound" class="hover:text-[#FF1E27] transition-colors">Sound</a></li>
+      </ul>
+      <a href="#booking" class="btn-primary text-white px-6 py-2.5 font-racing uppercase text-sm font-semibold tracking-wider rounded-sm">
+        Book Test Drive
+      </a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="relative min-h-screen flex items-center overflow-hidden">
+    <div class="absolute inset-0 hero-image"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-[#0D0D0D] via-[#0D0D0D]/85 to-transparent"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-[#0D0D0D] via-transparent to-[#0D0D0D]/40"></div>
+    <div class="absolute top-1/2 right-0 w-[600px] h-[600px] rounded-full bg-[#E50914]/25 blur-[140px] -translate-y-1/2 translate-x-1/3"></div>
+    <div class="absolute inset-0 speed-lines opacity-40"></div>
+
+    <div class="relative z-10 container mx-auto px-6 pt-24 pb-16">
+      <div class="max-w-5xl">
+        <div class="inline-flex items-center gap-2 mb-8 px-4 py-2 border border-[#E50914]/40 bg-[#E50914]/10 rounded-full backdrop-blur-sm">
+          <span class="w-2 h-2 bg-[#FF1E27] rounded-full animate-pulse"></span>
+          <span class="font-racing text-xs uppercase tracking-[0.3em] text-white">2025 Model · Available Now</span>
+        </div>
+
+        <h1 class="font-display text-7xl md:text-8xl lg:text-[10rem] leading-[0.85] mb-8">
+          <span class="block hero-text-gradient">UNLEASH</span>
+          <span class="block">THE <span class="italic-accent text-[#FF1E27] text-glow">BEAST</span></span>
+        </h1>
+
+        <p class="text-xl md:text-2xl text-slate-300 max-w-2xl mb-10 font-light leading-relaxed">
+          Supercharged 6.2L HEMI V8. <span class="text-white font-semibold">707 horsepower</span> of raw American muscle, engineered for those who refuse to be ordinary.
+        </p>
+
+        <div class="flex flex-wrap gap-4 mb-16">
+          <a href="#booking" class="btn-primary text-white px-8 py-4 font-racing uppercase text-base font-bold tracking-wider rounded-sm flex items-center gap-3">
+            Book a Test Drive <i class="fa-solid fa-arrow-right"></i>
+          </a>
+          <a href="#specs" class="btn-outline text-white px-8 py-4 font-racing uppercase text-base font-bold tracking-wider rounded-sm">
+            Explore Specs
+          </a>
+        </div>
+
+        <div class="float-anim inline-flex flex-wrap items-center gap-6 md:gap-10 px-8 py-5 bg-black/60 backdrop-blur-xl border border-white/10 rounded-lg red-glow">
+          <div>
+            <div class="font-display text-3xl md:text-4xl text-[#FF1E27]">3.4<span class="text-lg text-slate-400 ml-1">s</span></div>
+            <div class="text-xs uppercase tracking-widest text-slate-400 font-racing">0-60 mph</div>
+          </div>
+          <div class="h-12 w-px bg-white/10"></div>
+          <div>
+            <div class="font-display text-3xl md:text-4xl text-[#FF1E27]">707<span class="text-lg text-slate-400 ml-1">HP</span></div>
+            <div class="text-xs uppercase tracking-widest text-slate-400 font-racing">Horsepower</div>
+          </div>
+          <div class="h-12 w-px bg-white/10 hidden md:block"></div>
+          <div class="hidden md:block">
+            <div class="font-display text-3xl md:text-4xl text-[#FF1E27]">199<span class="text-lg text-slate-400 ml-1">mph</span></div>
+            <div class="text-xs uppercase tracking-widest text-slate-400 font-racing">Top Speed</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 scroll-bounce">
+      <span class="text-xs uppercase tracking-widest text-slate-500 font-racing">Scroll</span>
+      <i class="fa-solid fa-chevron-down text-slate-500"></i>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="bg-[#E50914] py-4 overflow-hidden border-y border-[#FF1E27]/30 relative">
+    <div class="marquee-anim flex whitespace-nowrap font-display text-2xl tracking-wider text-white">
+      <div class="flex items-center gap-12 px-6">
+        <span>AMERICAN MUSCLE</span><i class="fa-solid fa-bolt"></i>
+        <span>SUPERCHARGED V8</span><i class="fa-solid fa-bolt"></i>
+        <span>707 HORSEPOWER</span><i class="fa-solid fa-bolt"></i>
+        <span>BORN TO DOMINATE</span><i class="fa-solid fa-bolt"></i>
+        <span>RAW POWER REFINED</span><i class="fa-solid fa-bolt"></i>
+      </div>
+      <div class="flex items-center gap-12 px-6">
+        <span>AMERICAN MUSCLE</span><i class="fa-solid fa-bolt"></i>
+        <span>SUPERCHARGED V8</span><i class="fa-solid fa-bolt"></i>
+        <span>707 HORSEPOWER</span><i class="fa-solid fa-bolt"></i>
+        <span>BORN TO DOMINATE</span><i class="fa-solid fa-bolt"></i>
+        <span>RAW POWER REFINED</span><i class="fa-solid fa-bolt"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- PERFORMANCE FEATURES -->
+  <section id="performance" class="py-32 relative overflow-hidden">
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#E50914]/8 blur-[150px]"></div>
+
+    <div class="container mx-auto px-6 relative z-10">
+      <div class="text-center mb-20 reveal">
+        <p class="font-racing italic text-[#FF1E27] uppercase tracking-[0.4em] text-sm mb-4">Engineered to Dominate</p>
+        <h2 class="font-display text-5xl md:text-7xl mb-6">
+          PERFORMANCE <span class="italic-accent text-[#FF1E27]">DNA</span>
+        </h2>
+        <p class="text-slate-400 max-w-2xl mx-auto text-lg">
+          Every component is purpose-built for one mission: delivering uncompromising, adrenaline-fueled performance.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="feature-card p-8 rounded-lg reveal">
+          <div class="feature-icon text-5xl text-[#E50914] mb-6">
+            <i class="fa-solid fa-gears"></i>
+          </div>
+          <h3 class="font-display text-2xl mb-3">SUPERCHARGED HEMI</h3>
+          <p class="text-slate-400 mb-4 leading-relaxed">6.2L V8 with 2.4L supercharger delivering brutal, instant torque.</p>
+          <div class="flex items-baseline gap-2">
+            <span class="font-display text-3xl text-[#FF1E27]">707</span>
+            <span class="text-xs uppercase tracking-widest text-slate-500 font-racing">HP @ 6000 RPM</span>
+          </div>
+        </div>
+
+        <div class="feature-card p-8 rounded-lg reveal">
+          <div class="feature-icon text-5xl text-[#E50914] mb-6">
+            <i class="fa-solid fa-wind"></i>
+          </div>
+          <h3 class="font-display text-2xl mb-3">ACTIVE AERO</h3>
+          <p class="text-slate-400 mb-4 leading-relaxed">Track-tuned aerodynamics with functional splitter and rear spoiler.</p>
+          <div class="flex items-baseline gap-2">
+            <span class="font-display text-3xl text-[#FF1E27]">0.35</span>
+            <span class="text-xs uppercase tracking-widest text-slate-500 font-racing">DRAG COEFFICIENT</span>
+          </div>
+        </div>
+
+        <div class="feature-card p-8 rounded-lg reveal">
+          <div class="feature-icon text-5xl text-[#E50914] mb-6">
+            <i class="fa-solid fa-bolt"></i>
+          </div>
+          <h3 class="font-display text-2xl mb-3">2.4L BLOWER</h3>
+          <p class="text-slate-400 mb-4 leading-relaxed">Twin-screw supercharger producing 11.6 psi of boost pressure.</p>
+          <div class="flex items-baseline gap-2">
+            <span class="font-display text-3xl text-[#FF1E27]">11.6</span>
+            <span class="text-xs uppercase tracking-widest text-slate-500 font-racing">PSI BOOST</span>
+          </div>
+        </div>
+
+        <div class="feature-card p-8 rounded-lg reveal">
+          <div class="feature-icon text-5xl text-[#E50914] mb-6">
+            <i class="fa-solid fa-life-ring"></i>
+          </div>
+          <h3 class="font-display text-2xl mb-3">BREMBO BRAKES</h3>
+          <p class="text-slate-400 mb-4 leading-relaxed">6-piston front calipers with 15.4-inch slotted rotors for brutal stops.</p>
+          <div class="flex items-baseline gap-2">
+            <span class="font-display text-3xl text-[#FF1E27]">102</span>
+            <span class="text-xs uppercase tracking-widest text-slate-500 font-racing">FT · 60-0 MPH</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPECS SECTION -->
+  <section id="specs" class="py-32 relative bg-gradient-to-b from-[#0D0D0D] to-[#1A1A1A]">
+    <div class="absolute inset-0 speed-lines opacity-20"></div>
+    <div class="container mx-auto px-6 relative z-10">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <div class="reveal relative">
+          <div class="absolute -inset-4 bg-[#E50914]/20 blur-3xl"></div>
+          <img src="https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=1200&q=85"
+               alt="Hellcat Engine Bay"
+               class="relative rounded-lg w-full h-[500px] object-cover border border-white/10">
+          <div class="absolute bottom-4 left-4 right-4 bg-black/70 backdrop-blur-md p-4 rounded border border-white/10">
+            <div class="flex items-center justify-between">
+              <span class="font-racing uppercase tracking-widest text-xs text-slate-400">Engine Bay</span>
+              <span class="font-display text-xl text-[#FF1E27]">HEMI V8</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <p class="font-racing italic text-[#FF1E27] uppercase tracking-[0.4em] text-sm mb-4">Technical Specifications</p>
+          <h2 class="font-display text-5xl md:text-6xl mb-8">
+            BUILT FOR <span class="italic-accent text-[#FF1E27]">WAR</span>
+          </h2>
+
+          <div class="flex gap-6 mb-8 border-b border-white/10">
+            <button class="spec-tab active py-3 px-1 font-racing uppercase tracking-wider text-sm font-semibold" data-tab="powertrain">Powertrain</button>
+            <button class="spec-tab py-3 px-1 font-racing uppercase tracking-wider text-sm font-semibold text-slate-500" data-tab="performance">Performance</button>
+            <button class="spec-tab py-3 px-1 font-racing uppercase tracking-wider text-sm font-semibold text-slate-500" data-tab="dimensions">Dimensions</button>
+          </div>
+
+          <div id="tab-content" class="space-y-1"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery" class="py-32 relative">
+    <div class="container mx-auto px-6">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-16 reveal">
+        <div>
+          <p class="font-racing italic text-[#FF1E27] uppercase tracking-[0.4em] text-sm mb-4">Visual Showcase</p>
+          <h2 class="font-display text-5xl md:text-7xl">
+            EVERY <span class="italic-accent text-[#FF1E27]">ANGLE</span>
+          </h2>
+        </div>
+        <p class="text-slate-400 max-w-md mt-4 md:mt-0 text-lg">
+          A masterpiece of aggression, sculpted in metal. Explore the exterior dominance and interior luxury.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[200px] md:auto-rows-[250px]">
+        <div class="gallery-item col-span-2 row-span-2 rounded-lg">
+          <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=1200&q=85" alt="Front Profile" class="w-full h-full object-cover">
+          <div class="absolute bottom-4 left-4 z-10 badge">
+            <span class="text-xs font-racing uppercase tracking-widest text-slate-400">01</span>
+            <h3 class="font-display text-2xl">FRONT PROFILE</h3>
+          </div>
+        </div>
+
+        <div class="gallery-item rounded-lg">
+          <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=85" alt="Side" class="w-full h-full object-cover">
+          <div class="absolute bottom-3 left-3 z-10 badge">
+            <span class="text-xs font-racing uppercase tracking-widest text-slate-400">02</span>
+            <h3 class="font-display text-lg">SIDE</h3>
+          </div>
+        </div>
+
+        <div class="gallery-item rounded-lg">
+          <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800&q=85" alt="Interior" class="w-full h-full object-cover">
+          <div class="absolute bottom-3 left-3 z-10 badge">
+            <span class="text-xs font-racing uppercase tracking-widest text-slate-400">03</span>
+            <h3 class="font-display text-lg">INTERIOR</h3>
+          </div>
+        </div>
+
+        <div class="gallery-item rounded-lg">
+          <img src="https://images.unsplash.com/photo-1542362567-b07e54358753?w=800&q=85" alt="Rear" class="w-full h-full object-cover">
+          <div class="absolute bottom-3 left-3 z-10 badge">
+            <span class="text-xs font-racing uppercase tracking-widest text-slate-400">04</span>
+            <h3 class="font-display text-lg">REAR</h3>
+          </div>
+        </div>
+
+        <div class="gallery-item rounded-lg">
+          <img src="https://images.unsplash.com/photo-1551830820-330a71b99659?w=800&q=85" alt="Dashboard" class="w-full h-full object-cover">
+          <div class="absolute bottom-3 left-3 z-10 badge">
+            <span class="text-xs font-racing uppercase tracking-widest text-slate-400">05</span>
+            <h3 class="font-display text-lg">DASH</h3>
+          </div>
+        </div>
+
+        <div class="gallery-item col-span-2 rounded-lg">
+          <img src="https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=1200&q=85" alt="Detail" class="w-full h-full object-cover">
+          <div class="absolute bottom-3 left-3 z-10 badge">
+            <span class="text-xs font-racing uppercase tracking-widest text-slate-400">06</span>
+            <h3 class="font-display text-lg">DETAIL SHOT</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOUND SECTION -->
+  <section id="sound" class="py-32 relative overflow-hidden bg-gradient-to-b from-[#1A1A1A] to-[#0D0D0D]">
+    <div class="absolute inset-0 speed-lines opacity-30"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#E50914]/10 blur-[150px] rounded-full"></div>
+
+    <div class="container mx-auto px-6 relative z-10">
+      <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-12 reveal">
+          <p class="font-racing italic text-[#FF1E27] uppercase tracking-[0.4em] text-sm mb-4">Audio Experience</p>
+          <h2 class="font-display text-5xl md:text-7xl mb-6">
+            THE <span class="italic-accent text-[#FF1E27] text-glow">ROAR</span>
+          </h2>
+          <p class="text-slate-400 max-w-2xl mx-auto text-lg">
+            Supercharger whine meets quad exhaust growl. The Hellcat doesn't announce itself — it declares war.
+          </p>
+        </div>
+
+        <div class="relative bg-black/60 backdrop-blur-xl border border-white/10 rounded-xl p-8 md:p-12 overflow-hidden reveal">
+          <div class="absolute -top-20 -right-20 w-80 h-80 bg-[#E50914]/25 blur-[100px] rounded-full"></div>
+          <div class="absolute -bottom-20 -left-20 w-80 h-80 bg-[#FF1E27]/15 blur-[100px] rounded-full"></div>
+
+          <div class="relative z-10 flex flex-col md:flex-row items-center gap-10">
+            <div class="relative flex-shrink-0">
+              <button id="playButton" class="relative w-32 h-32 rounded-full bg-gradient-to-br from-[#E50914] to-[#FF1E27] flex items-center justify-center pulse-glow-anim group transition-transform hover:scale-105">
+                <i id="playIcon" class="fa-solid fa-play text-3xl text-white ml-2"></i>
+                <span class="sound-ring"></span>
+                <span class="sound-ring" style="animation-delay: 0.7s"></span>
+                <span class="sound-ring" style="animation-delay: 1.4s"></span>
+              </button>
+            </div>
+
+            <div class="flex-1 w-full">
+              <div class="flex items-center justify-between mb-4">
+                <div>
+                  <h3 class="font-display text-2xl">EXHAUST ROAR</h3>
+                  <p class="text-slate-400 text-sm font-racing uppercase tracking-wider">Active Exhaust · Track Mode</p>
+                </div>
+                <span class="font-racing text-sm text-slate-400">0:08</span>
+              </div>
+
+              <div class="flex items-end justify-between gap-[2px] h-24" id="waveform"></div>
+
+              <div class="mt-4 h-1 bg-white/10 rounded-full overflow-hidden">
+                <div id="progressBar" class="h-full bg-gradient-to-r from-[#E50914] to-[#FF1E27] w-0 transition-all duration-300"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-3 mt-8 reveal">
+          <span class="px-4 py-2 border border-[#FF1E27] bg-[#FF1E27]/10 text-[#FF1E27] font-racing uppercase text-xs tracking-widest rounded-full cursor-pointer">Track Mode</span>
+          <span class="px-4 py-2 border border-white/10 text-slate-400 font-racing uppercase text-xs tracking-widest rounded-full cursor-pointer hover:border-white/30">Sport Mode</span>
+          <span class="px-4 py-2 border border-white/10 text-slate-400 font-racing uppercase text-xs tracking-widest rounded-full cursor-pointer hover:border-white/30">Default Mode</span>
+          <span class="px-4 py-2 border border-white/10 text-slate-400 font-racing uppercase text-xs tracking-widest rounded-full cursor-pointer hover:border-white/30">Stealth Mode</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOKING FORM -->
+  <section id="booking" class="py-32 relative">
+    <div class="absolute top-1/2 left-0 w-[500px] h-[500px] bg-[#E50914]/10 blur-[150px] -translate-y-1/2"></div>
+
+    <div class="container mx-auto px-6 relative z-10">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <div class="reveal">
+          <p class="font-racing italic text-[#FF1E27] uppercase tracking-[0.4em] text-sm mb-4">Reserve Your Experience</p>
+          <h2 class="font-display text-5xl md:text-7xl mb-8 leading-[0.9]">
+            CLAIM<br>
+            YOUR <span class="italic-accent text-[#FF1E27]">DRIVE</span>
+          </h2>
+          <p class="text-slate-400 text-lg mb-10 max-w-md">
+            Get behind the wheel of the most powerful production muscle car in America. Limited test drive slots available at authorized SRT dealers.
+          </p>
+
+          <div class="space-y-5">
+            <div class="flex items-center gap-4">
+              <div class="w-11 h-11 rounded-full bg-[#E50914]/10 border border-[#E50914]/30 flex items-center justify-center flex-shrink-0">
+                <i class="fa-solid fa-shield-halved text-[#FF1E27]"></i>
+              </div>
+              <div>
+                <h4 class="font-racing font-semibold uppercase tracking-wider text-sm">No Commitment</h4>
+                <p class="text-slate-400 text-sm">Test drive is free with no purchase obligation</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="w-11 h-11 rounded-full bg-[#E50914]/10 border border-[#E50914]/30 flex items-center justify-center flex-shrink-0">
+                <i class="fa-solid fa-location-dot text-[#FF1E27]"></i>
+              </div>
+              <div>
+                <h4 class="font-racing font-semibold uppercase tracking-wider text-sm">200+ SRT Dealers</h4>
+                <p class="text-slate-400 text-sm">Find a certified SRT dealer near you</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="w-11 h-11 rounded-full bg-[#E50914]/10 border border-[#E50914]/30 flex items-center justify-center flex-shrink-0">
+                <i class="fa-solid fa-clock text-[#FF1E27]"></i>
+              </div>
+              <div>
+                <h4 class="font-racing font-semibold uppercase tracking-wider text-sm">Priority Booking</h4>
+                <p class="text-slate-400 text-sm">Confirmed appointment within 24 hours</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <form id="bookingForm" class="bg-gradient-to-br from-[#1A1A1A] to-[#0D0D0D] border border-white/10 rounded-xl p-8 md:p-10 space-y-5 relative overflow-hidden">
+            <div class="absolute -top-20 -right-20 w-60 h-60 bg-[#E50914]/15 blur-[80px] rounded-full"></div>
+            <div class="relative z-10">
+              <h3 class="font-display text-2xl mb-6">BOOK YOUR TEST DRIVE</h3>
+
+              <div>
+                <label class="block font-racing uppercase text-xs tracking-widest text-slate-400 mb-2">Full Name</label>
+                <input type="text" required class="form-input w-full px-4 py-3 rounded-sm text-white" placeholder="John Doe">
+              </div>
+
+              <div class="grid md:grid-cols-2 gap-4">
+                <div>
+                  <label class="block font-racing uppercase text-xs tracking-widest text-slate-400 mb-2">Email</label>
+                  <input type="email" required class="form-input w-full px-4 py-3 rounded-sm text-white" placeholder="john@example.com">
+                </div>
+                <div>
+                  <label class="block font-racing uppercase text-xs tracking-widest text-slate-400 mb-2">Phone</label>
+                  <input type="tel" required class="form-input w-full px-4 py-3 rounded-sm text-white" placeholder="+1 (555) 000-0000">
+                </div>
+              </div>
+
+              <div>
+                <label class="block font-racing uppercase text-xs tracking-widest text-slate-400 mb-2">Preferred Dealer Location</label>
+                <select required class="form-input w-full px-4 py-3 rounded-sm text-white">
+                  <option value="" class="bg-[#1A1A1A]">Select a location...</option>
+                  <option class="bg-[#1A1A1A]">Los Angeles, CA</option>
+                  <option class="bg-[#1A1A1A]">New York, NY</option>
+                  <option class="bg-[#1A1A1A]">Miami, FL</option>
+                  <option class="bg-[#1A1A1A]">Dallas, TX</option>
+                  <option class="bg-[#1A1A1A]">Chicago, IL</option>
+                  <option class="bg-[#1A1A1A]">Las Vegas, NV</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block font-racing uppercase text-xs tracking-widest text-slate-400 mb-2">Preferred Date</label>
+                <input type="date" required id="dateInput" class="form-input w-full px-4 py-3 rounded-sm text-white">
+              </div>
+
+              <button type="submit" class="btn-primary w-full text-white px-8 py-4 font-racing uppercase text-base font-bold tracking-wider rounded-sm flex items-center justify-center gap-3 mt-6">
+                Claim Your Drive <i class="fa-solid fa-bolt"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-[#080808] border-t border-white/10 py-12 relative">
+    <div class="container mx-auto px-6">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-3">
+          <span class="font-display text-2xl tracking-wider">DODGE</span>
+          <span class="text-xs font-racing italic text-[#FF1E27] border-l border-white/20 pl-2">SRT HELLCAT</span>
+        </div>
+        <p class="text-xs text-slate-500 font-racing tracking-wider uppercase">
+          © 2026 Dodge. All Rights Reserved. Built for Performance.
+        </p>
+        <div class="flex gap-6 text-slate-400">
+          <a href="#" class="hover:text-[#FF1E27] transition-colors"><i class="fa-brands fa-instagram text-lg"></i></a>
+          <a href="#" class="hover:text-[#FF1E27] transition-colors"><i class="fa-brands fa-youtube text-lg"></i></a>
+          <a href="#" class="hover:text-[#FF1E27] transition-colors"><i class="fa-brands fa-x-twitter text-lg"></i></a>
+          <a href="#" class="hover:text-[#FF1E27] transition-colors"><i class="fa-brands fa-facebook-f text-lg"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer><!-- JAVASCRIPT LOGIC -->
+  <script>
+    // Cursor Glow Tracking
+    const cursor = document.getElementById('cursorGlow');
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+
+    // Navbar Background Shift on Scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('nav-scrolled');
+      } else {
+        navbar.classList.remove('nav-scrolled');
+      }
+    });
+
+    // Technical Specs Data & Tabs
+    const specData = {
+      powertrain: [
+        { label: 'Engine Type', value: 'Supercharged 6.2L HEMI V8' },
+        { label: 'Horsepower', value: '707 HP @ 6,000 RPM' },
+        { label: 'Torque', value: '650 lb-ft @ 4,800 RPM' },
+        { label: 'Transmission', value: 'TorqueFlite 8-Speed Automatic' },
+        { label: 'Drive Type', value: 'Rear-Wheel Drive (RWD)' }
+      ],
+      performance: [
+        { label: '0-60 mph', value: '3.4 Seconds' },
+        { label: 'Top Speed', value: '199 mph (320 km/h)' },
+        { label: '1/4 Mile Time', value: '11.2 Seconds @ 125 mph' },
+        { label: 'Braking (60-0 mph)', value: '102 Feet' },
+        { label: 'Lateral Acceleration', value: '0.96 g' }
+      ],
+      dimensions: [
+        { label: 'Curb Weight', value: '4,429 lbs' },
+        { label: 'Wheelbase', value: '116.2 in' },
+        { label: 'Overall Length', value: '197.5 in' },
+        { label: 'Overall Width', value: '75.7 in' },
+        { label: 'Fuel Capacity', value: '18.5 Gallons' }
+      ]
+    };
+
+    const tabContent = document.getElementById('tab-content');
+    const tabs = document.querySelectorAll('.spec-tab');
+
+    function renderSpecs(category) {
+      const list = specData[category];
+      tabContent.innerHTML = list.map(item => `
+        <div class="spec-row flex items-center justify-between py-4 border-b border-white/5">
+          <span class="text-slate-400 font-racing uppercase tracking-wider text-sm">${item.label}</span>
+          <span class="font-display text-lg text-white">${item.value}</span>
+        </div>
+      `).join('');
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active', 'text-white'));
+        tabs.forEach(t => t.classList.add('text-slate-500'));
+        tab.classList.add('active');
+        tab.classList.remove('text-slate-500');
+        renderSpecs(tab.dataset.tab);
+      });
+    });
+
+    renderSpecs('powertrain');
+
+    // Audio Waveform Generator
+    const waveform = document.getElementById('waveform');
+    const barCount = 40;
+    for (let i = 0; i < barCount; i++) {
+      const bar = document.createElement('div');
+      bar.className = 'wave-bar';
+      const randomHeight = Math.floor(Math.random() * 70) + 20;
+      bar.style.height = `${randomHeight}%`;
+      bar.style.animationDelay = `${(i * 0.05).toFixed(2)}s`;
+      waveform.appendChild(bar);
+    }
+
+    // --- Web Audio Synthesizer (محاكي صوت المحرك المضمون) ---
+    const playButton = document.getElementById('playButton');
+    const playIcon = document.getElementById('playIcon');
+    const progressBar = document.getElementById('progressBar');
+    let isPlaying = false;
+    let audioCtx = null;
+    let osc = null;
+    let gainNode = null;
+    let progressTimer = null;
+    let currentFreq = 70; // التردد الأساسي لصوت المحرك
+
+    playButton.addEventListener('click', () => {
+      isPlaying = !isPlaying;
+      const waveBars = document.querySelectorAll('.wave-bar');
+
+      if (isPlaying) {
+        // إنشاء الـ AudioContext عند الضغط مباشرة لتخطي حظر المتصفح
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+
+        playIcon.classList.remove('fa-play');
+        playIcon.classList.add('fa-pause');
+        waveBars.forEach(b => b.classList.add('playing'));
+
+        // إنشاء المذبذب وتوليد صوت المحرك
+        osc = audioCtx.createOscillator();
+        gainNode = audioCtx.createGain();
+
+        osc.type = 'sawtooth'; // نوع الموجه ليعطي صوت محرك عالي وقوي
+        osc.frequency.setValueAtTime(currentFreq, audioCtx.currentTime);
+
+        // تسارع المحرك (Revving Effect)
+        osc.frequency.exponentialRampToValueAtTime(currentFreq * 2.5, audioCtx.currentTime + 1.5);
+        osc.frequency.exponentialRampToValueAtTime(currentFreq * 1.8, audioCtx.currentTime + 4.0);
+
+        gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
+
+        osc.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        osc.start();
+
+        let p = 0;
+        progressTimer = setInterval(() => {
+          p += 2;
+          progressBar.style.width = `${p}%`;
+          if (p >= 100) stopEngine();
+        }, 160);
+
+      } else {
+        stopEngine();
+      }
+    });
+
+    function stopEngine() {
+      isPlaying = false;
+      playIcon.classList.remove('fa-pause');
+      playIcon.classList.add('fa-play');
+      document.querySelectorAll('.wave-bar').forEach(b => b.classList.remove('playing'));
+      
+      if (osc) {
+        try { osc.stop(); osc.disconnect(); } catch(e){}
+        osc = null;
+      }
+      if (progressTimer) clearInterval(progressTimer);
+      progressBar.style.width = '0%';
+    }
+
+    // Change pitch based on Modes
+    const modeButtons = document.querySelectorAll('#sound .rounded-full');
+    modeButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        modeButtons.forEach(b => {
+          b.classList.remove('border-[#FF1E27]', 'bg-[#FF1E27]/10', 'text-[#FF1E27]');
+          b.classList.add('border-white/10', 'text-slate-400');
+        });
+        btn.classList.remove('border-white/10', 'text-slate-400');
+        btn.classList.add('border-[#FF1E27]', 'bg-[#FF1E27]/10', 'text-[#FF1E27]');
+
+        const modeName = btn.innerText.trim();
+        if (modeName.includes('Track')) currentFreq = 110;
+        else if (modeName.includes('Sport')) currentFreq = 90;
+        else if (modeName.includes('Stealth')) currentFreq = 45;
+        else currentFreq = 70;
+
+        if (isPlaying && osc) {
+          osc.frequency.setValueAtTime(currentFreq * 1.5, audioCtx.currentTime);
+        }
+      });
+    });
+
+    // Scroll Reveal Intersection Observer
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    reveals.forEach(el => observer.observe(el));
+
+    // Booking Form
+    document.getElementById('bookingForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('🔥 Your Test Drive request has been received!');
+      e.target.reset();
+    });
+  </script>
